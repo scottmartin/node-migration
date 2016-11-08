@@ -1,0 +1,28 @@
+#! /usr/bin/env node --harmony
+
+const program = require('commander')
+const fse = require('fs-extra')
+const path = require('path')
+const migrate = require('../modules/migrate')
+
+program
+  .description('Create a new migration file.')
+  .arguments('<name>')
+  .option(
+    '-d, --dir [dir]',
+    'The directory that is used to find migrations. Default is "./migrations".',
+     './migrations'
+   )
+  .action((name, opts) => {
+    const file = path.resolve(opts.dir, migrate.toFilename({
+      id: (new Date()).getTime(),
+      name
+    }))
+    fse.ensureDirSync(path.dirname(file))
+    fse.writeFileSync(file,
+      'exports.up = (ctx) => {\n  return ctx\n}\n\n' +
+      'exports.down = (ctx) => {\n  return ctx\n}\n'
+    )
+    console.log('Created migration:', file)
+  })
+  .parse(process.argv)

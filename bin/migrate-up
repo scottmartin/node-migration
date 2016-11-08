@@ -1,0 +1,21 @@
+#! /usr/bin/env node --harmony
+
+const program = require('commander')
+const migrate = require('../modules/migrate')
+
+program
+  .description('Run all unapplied migrations.')
+  .option(
+    '-d, --dir [dir]',
+    'The directory that is used to find migrations. Default is "./migrations".',
+     './migrations'
+   )
+  .option(
+    '-f, --file [file]',
+    'The filename that is used to store which migrations have been run. ' +
+      'Default is "migrations.json".',
+    'migrations.json'
+  )
+  .parse(process.argv)
+
+migrate.run('up', { dir: program.dir, file: program.file })

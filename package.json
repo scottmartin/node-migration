@@ -1,0 +1,32 @@
+{
+  "name": "node-migration",
+  "version": "1.0.0",
+  "description": "A generic promise based migration tool for node.js.",
+  "main": "index.js",
+  "bin": {
+    "migrate": "./bin/migrate"
+  },
+  "scripts": {
+    "lint": "standard"
+  },
+  "keywords": [
+    "migration",
+    "migrate"
+  ],
+  "author": {
+    "name": "Scott Martin",
+    "url": "https://github.com/scottmartin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scottmartin/node-migration.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^8.4.0"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "fs-extra": "^0.30.0"
+  }
+}

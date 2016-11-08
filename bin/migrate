@@ -1,0 +1,12 @@
+#! /usr/bin/env node --harmony
+
+const program = require('commander')
+const pkg = require('../package')
+
+program
+  .description('A generic promise based migration tool for node.js.')
+  .version(pkg.version)
+  .command('create <name>', 'Create a new migration file.')
+  .command('up', 'Run all unapplied migrations.')
+  .command('down', 'Reverse all migrations down to the last successfully applied migration.')
+  .parse(process.argv)
