@@ -1,6 +1,6 @@
 {
   "name": "node-migration",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A generic promise based migration tool for node.js.",
   "main": "index.js",
   "bin": {
