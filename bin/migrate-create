@@ -20,8 +20,8 @@ program
     }))
     fse.ensureDirSync(path.dirname(file))
     fse.writeFileSync(file,
-      'exports.up = (ctx) => {\n  return ctx\n}\n\n' +
-      'exports.down = (ctx) => {\n  return ctx\n}\n'
+      'exports.up = (ctx) => {\n  \n}\n\n' +
+      'exports.down = (ctx) => {\n  \n}\n'
     )
     console.log('Created migration:', file)
   })
