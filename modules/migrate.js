@@ -17,11 +17,9 @@ module.exports = {
     .then(() => setup({ dir, file }))
     .then((ctx) => {
       context = ctx
-      return context._getState()
     })
-    .then(() => {
-      return this[direction](context, { dir })
-    })
+    .then(() => context._getState())
+    .then(() => this[direction](context, { dir }))
     .then(() => context._saveState())
     .catch((error) => {
       console.error(error)
@@ -41,7 +39,7 @@ module.exports = {
         const fileContents = require(path.resolve(dir, this.toFilename(file)))
         if (fileContents.up) {
           migrationCount += 1
-          promiseChain
+          return promiseChain
           .then(() => {
             console.log('Running migration:', file.name, `(${file.id})`)
           })
@@ -53,16 +51,16 @@ module.exports = {
 
     // Add the last run migration to the state
     if (migrationCount > 0) {
-      promiseChain.then(() => {
+      return promiseChain.then(() => {
         const migration = fileList.slice(-1)[0]
         migration.migratedOn = new Date()
         ctx.state.push(migration)
       })
     } else {
-      promiseChain.then(() => { console.log('No migrations to run') })
+      return promiseChain.then(() => {
+        console.log('No migrations to run')
+      })
     }
-
-    return promiseChain
   },
 
   down (ctx, { dir }) {
@@ -86,7 +84,7 @@ module.exports = {
         const fileContents = require(path.resolve(dir, this.toFilename(file)))
         if (fileContents.down) {
           migrationCount += 1
-          promiseChain
+          return promiseChain
           .then(() => {
             console.log('Reversing migration:', file.name, `(${file.id})`)
           })
@@ -98,14 +96,14 @@ module.exports = {
 
     // Remove the last run migration from the state
     if (migrationCount > 0) {
-      promiseChain.then(() => {
+      return promiseChain.then(() => {
         ctx.state.pop()
       })
     } else {
-      promiseChain.then(() => { console.log('No migrations to run') })
+      return promiseChain.then(() => {
+        console.log('No migrations to run')
+      })
     }
-
-    return promiseChain
   },
 
   toFilename (migration) {
